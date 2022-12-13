@@ -10,6 +10,7 @@ class Slack extends NotificationProvider {
     /**
      * Deprecated property notification.slackbutton
      * Set it as primary base url if this is not yet set.
+     * @param {string} url The primary base URL to use
      */
     static async deprecateURL(url) {
         let currentPrimaryBaseURL = await setting("primaryBaseURL");
@@ -39,8 +40,9 @@ class Slack extends NotificationProvider {
             }
 
             const time = heartbeatJSON["time"];
+            const textMsg = "Uptime Kuma Alert";
             let data = {
-                "text": "Uptime Kuma Alert",
+                "text": monitorJSON ? textMsg + `: ${monitorJSON.name}` : textMsg,
                 "channel": notification.slackchannel,
                 "username": notification.slackusername,
                 "icon_emoji": notification.slackiconemo,
